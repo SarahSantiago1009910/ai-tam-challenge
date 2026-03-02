@@ -20,6 +20,7 @@
 
     <nav class="sidebar-nav">
       <div class="nav-section"><span class="nav-section-label">Overview</span></div>
+      <a class="nav-item" href="#visual-summary"><span class="nav-num">—</span> At a Glance</a>
       <a class="nav-item" href="#exec-summary"><span class="nav-num">—</span> Executive Summary</a>
       <a class="nav-item" href="#case-context"><span class="nav-num">—</span> Case Context</a>
 
@@ -94,6 +95,103 @@
 
     <!-- ── Content ── -->
     <div class="content">
+
+      <!-- ════════════════════════════════
+           VISUAL SUMMARY (CEO VIEW)
+      ════════════════════════════════ -->
+      <div class="section" id="visual-summary">
+        <div class="section-header">
+          <div class="section-number">At a Glance</div>
+          <div class="section-title">Visual Summary — For the Decision Maker</div>
+          <div class="section-desc">Full picture in one view. Details in the sections below.</div>
+        </div>
+
+        <!-- KPI strip -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px">
+          <div style="flex:1;min-width:150px;background:#1a0a0a;border:1px solid #4a1515;border-radius:8px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:800;color:var(--yuno-danger)">−31pp</div>
+            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Auth rate collapse<br>78% → 47%</div>
+          </div>
+          <div style="flex:1;min-width:150px;background:#1a0a0a;border:1px solid #4a1515;border-radius:8px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:800;color:var(--yuno-danger)">8,018</div>
+            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Declined transactions<br>in 4 days · code 82</div>
+          </div>
+          <div style="flex:1;min-width:150px;background:#1a0a0a;border:1px solid #4a1515;border-radius:8px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:800;color:var(--yuno-danger)">$1.2M</div>
+            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Monthly revenue<br>at risk · EG + SA</div>
+          </div>
+          <div style="flex:1;min-width:150px;background:#0a1a0a;border:1px solid #1e4d1e;border-radius:8px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:800;color:#4ade80">$630K+</div>
+            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Recoverable/month<br>after fix</div>
+          </div>
+        </div>
+
+        <!-- 3-column mind map -->
+        <div style="background:var(--yuno-navy);border:1px solid var(--yuno-border);border-radius:12px;padding:24px;margin-bottom:20px">
+          <div style="text-align:center;margin-bottom:20px">
+            <div style="display:inline-block;background:#1f1135;border:2px solid var(--yuno-accent);border-radius:10px;padding:12px 24px">
+              <div style="font-size:13px;font-weight:700;color:var(--yuno-accent)">STREAMWAVE MENA CRISIS</div>
+              <div style="font-size:11px;color:var(--yuno-muted);margin-top:2px">Egypt &amp; Saudi Arabia · April 10–14, 2025</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+
+            <div style="background:#0f1a0f;border:1px solid #1e4d1e;border-radius:10px;padding:16px">
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4ade80;margin-bottom:10px">ROOT CAUSE</div>
+              <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.5">
+                <div style="background:rgba(74,222,128,0.07);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px">CBE + SAMA mandated <strong>SCA/3DS</strong> for all recurring card payments from April 10</div>
+                <div style="background:rgba(74,222,128,0.07);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px">Fawry + Checkout.com MENA warned on <strong>March 28–29</strong>. TAM acknowledged, did not act.</div>
+                <div style="background:rgba(74,222,128,0.07);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px">MIT billing payload missing <code style="background:#0a2a0a;padding:1px 4px;border-radius:3px">stored_credentials</code> + 3DS exemption flag</div>
+                <div style="background:rgba(239,68,68,0.1);border-left:3px solid var(--yuno-danger);border-radius:4px;padding:7px 9px"><strong>NOT the UI deploy.</strong> First payments −2.7pp only. Collapse is 100% MIT recurring.</div>
+              </div>
+            </div>
+
+            <div style="background:#0f1520;border:1px solid #1e3a5f;border-radius:10px;padding:16px">
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--yuno-accent);margin-bottom:10px">HOW WE DIAGNOSED</div>
+              <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.5">
+                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>6 data tables:</strong> auth by country, payment type, decline code, BIN, timeline, retry</div>
+                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>BIN uniformity:</strong> all 10 issuers (5 EG, 5 SA) identical drop → merchant-side failure, not issuer policy</div>
+                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>Slack #product-tech:</strong> confirmed Yuno bug on <code style="background:#0a1a2a;padding:1px 4px;border-radius:3px">challenge_indicator</code> mapping</div>
+                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>UAE/Kuwait unaffected</strong> on same acquirer → SAMA mandate, not platform failure</div>
+              </div>
+            </div>
+
+            <div style="background:#1a1500;border:1px solid #4d3d00;border-radius:10px;padding:16px">
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fbbf24;margin-bottom:10px">SOLUTION &amp; RECOVERY</div>
+              <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.5">
+                <div style="background:rgba(251,191,36,0.07);border-left:3px solid #fbbf24;border-radius:4px;padding:7px 9px"><strong>P0 — today:</strong> Add <code style="background:#1a1200;padding:1px 4px;border-radius:3px">stored_credentials</code> to MIT payload + fix Checkout.com <code style="background:#1a1200;padding:1px 4px;border-radius:3px">challenge_indicator</code> bug</div>
+                <div style="background:rgba(251,191,36,0.07);border-left:3px solid #fbbf24;border-radius:4px;padding:7px 9px"><strong>P1 — 48h:</strong> Enable <code style="background:#1a1200;padding:1px 4px;border-radius:3px">recurring_operation</code> exemption in Smart Routing + TAP failover</div>
+                <div style="background:rgba(251,191,36,0.07);border-left:3px solid #fbbf24;border-radius:4px;padding:7px 9px"><strong>Recovery:</strong> Force-retry ACTIVE subs · Resume PAUSED → ACTIVE · Re-enroll CANCELED (~620)</div>
+                <div style="background:rgba(74,222,128,0.12);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px"><strong>Expected: ~$630K+/month recovered</strong> once fix deployed</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Action timeline strip -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+          <div style="background:var(--yuno-navy);border:1px solid var(--yuno-danger);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-danger);text-transform:uppercase">Now — P0</div>
+            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">Fix MIT payload<br>+ routing bug</div>
+          </div>
+          <div style="background:var(--yuno-navy);border:1px solid var(--yuno-warning);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-warning);text-transform:uppercase">Within 48h — P1</div>
+            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">SCA exemption<br>+ TAP failover</div>
+          </div>
+          <div style="background:var(--yuno-navy);border:1px solid var(--yuno-accent);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-accent);text-transform:uppercase">Week 1 — P1</div>
+            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">Force retry<br>+ resume PAUSED</div>
+          </div>
+          <div style="background:var(--yuno-navy);border:1px solid #4ade80;border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#4ade80;text-transform:uppercase">Week 2 — P2</div>
+            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">Re-enrollment<br>campaign · CANCELED</div>
+          </div>
+        </div>
+
+      </div>
+
 
       <!-- ════════════════════════════════
            EXECUTIVE SUMMARY

@@ -196,9 +196,9 @@
             <div class="tl-body">
               <strong>Repositories consulted:</strong>
               <ul style="margin:8px 0 0 16px; line-height:2">
-                <li><code><a href="https://github.com/SarahSantiago1009910/yuno-sdks-integration-simulation" target="_blank" style="color:var(--yuno-accent)">SarahSantiago1009910/yuno-sdks-integration-simulation</a></code> <span class="badge badge-incident" style="font-size:10px;padding:1px 6px">private</span> — Full Checkout &amp; Secure Fields SDK integration code; confirmed <code>workflow: "DIRECT"</code> pattern, <code>vaulted_token</code> vs <code>token</code> distinction, <code>stored_credentials</code> object structure in real integration code.</li>
-                <li><code><a href="https://github.com/SarahSantiago1009910/ai.challenge" target="_blank" style="color:var(--yuno-accent)">SarahSantiago1009910/ai.challenge</a></code> <span class="badge badge-resolved" style="font-size:10px;padding:1px 6px">public</span> — Target delivery repository for this challenge. Confirmed existing structure (README + .gitattributes) before pushing deliverable.</li>
-                <li><code><a href="https://github.com/yuno-payments" target="_blank" style="color:var(--yuno-accent)">yuno-payments</a></code> org — Scanned public repositories for SDK documentation, integration examples, and changelog history to understand recurring payment flows.</li>
+                <li><code><a href="https://github.com/SarahSantiago1009910/yuno-sdks-integration-simulation" target="_blank" style="color:var(--yuno-accent)">SarahSantiago1009910/yuno-sdks-integration-simulation</a></code> <span class="badge badge-incident" style="font-size:10px;padding:1px 6px">private</span> — Full Checkout &amp; Secure Fields SDK integration simulation. Extracted: <code>workflow: "DIRECT"</code> pattern for MIT, <code>vaulted_token</code> (not <code>token</code>) for vault charges, real <code>stored_credentials</code> object usage in billing jobs, webhook HMAC validation flow, <code>showPaymentStatus: true</code> config, <code>paidRef</code> guard to prevent double-charge.</li>
+                <li><code><a href="https://github.com/SarahSantiago1009910/ai-tam-challenge" target="_blank" style="color:var(--yuno-accent)">SarahSantiago1009910/ai-tam-challenge</a></code> <span class="badge badge-resolved" style="font-size:10px;padding:1px 6px">public</span> — This deliverable's repository. Created and pushed as part of the challenge output.</li>
+                <li><code><a href="https://github.com/SarahSantiago1009910/ai.challenge" target="_blank" style="color:var(--yuno-accent)">SarahSantiago1009910/ai.challenge</a></code> <span class="badge badge-resolved" style="font-size:10px;padding:1px 6px">public</span> — Prior challenge repository. Inspected structure (README + .gitattributes) to understand existing format before delivery.</li>
               </ul>
             </div>
           </div>
@@ -211,35 +211,52 @@
               <strong>Pages consulted via CQL search + direct page reads:</strong>
               <div class="table-wrap" style="margin-top:10px">
                 <table>
-                  <thead><tr><th>Page / Document</th><th>Key Insight Extracted</th></tr></thead>
+                  <thead><tr><th>Page / Document</th><th>Space</th><th>Key Insight Extracted</th></tr></thead>
                   <tbody>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/~712020a6cc0c0eb9e5bb8e55bcde7d7d5b0cd5/pages/196608/3DS+2.0" target="_blank" style="color:var(--yuno-accent)">3DS 2.0 Technical Documentation</a></td>
-                      <td>Confirmed <code>three_d_secure_exemptions: ["recurring_operation"]</code> as the correct SCA exemption field in Yuno Smart Routing config; ECI values (05=frictionless, 06=challenge); <code>stored_credentials.reason: "SUBSCRIPTION"</code> requirement</td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/PROD/pages/779092023/3DS+-+Yuno" target="_blank" style="color:var(--yuno-accent)">3DS — Yuno</a></td>
+                      <td><code>PROD</code></td>
+                      <td>Confirmed <code>three_d_secure_exemptions: ["recurring_operation"]</code> as the correct SCA exemption field in Yuno Smart Routing config; ECI values (05=frictionless, 06=challenge); <code>stored_credentials.reason: "SUBSCRIPTION"</code> requirement for MIT</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/~712020a6cc0c0eb9e5bb8e55bcde7d7d5b0cd5/pages/327683" target="_blank" style="color:var(--yuno-accent)">Checkout.com 3DS Technical Integration</a></td>
-                      <td>Confirmed response code <strong>20154</strong> = "3D-Secure Authentication Required" (Checkout.com soft decline, equivalent to code 82); must trigger 3DS flow on soft decline</td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/TAM/pages/998080517/3DS+flow" target="_blank" style="color:var(--yuno-accent)">3DS flow</a></td>
+                      <td><code>TAM</code></td>
+                      <td>TAM-specific 3DS implementation guide; frictionless vs challenge flow decision tree; SCA exemption configuration steps for recurring merchants</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/~712020a6cc0c0eb9e5bb8e55bcde7d7d5b0cd5/pages/360448" target="_blank" style="color:var(--yuno-accent)">TAP Payments — Cards (MENA)</a></td>
-                      <td>TAP Payments supports AE, SA, BH, KW, OM, QA, EG — covers Mada, KNET, Fawry, Meeza; viable backup acquirer for Egypt &amp; Saudi Arabia failover routing</td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/918716436/CHECKOUT" target="_blank" style="color:var(--yuno-accent)">CHECKOUT ⭐️ (Checkout.com — Main)</a></td>
+                      <td><code>Muggles</code></td>
+                      <td>Confirmed Checkout.com MENA acquirer configuration; response code <strong>20154</strong> = "3D-Secure Authentication Required" (equivalent to code 82); countries covered including SA, AE, KW, QA, BH, OM, EG</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/~712020a6cc0c0eb9e5bb8e55bcde7d7d5b0cd5/pages/393217" target="_blank" style="color:var(--yuno-accent)">Tamara — BNPL MENA</a></td>
-                      <td>Tamara integrated in Yuno; supports SA, AE, KW, BH, QA, EG; BNPL alternative reduces churn from failed card billing; no 3DS friction</td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2275639298/TAP+-+Cards" target="_blank" style="color:var(--yuno-accent)">TAP — Cards</a></td>
+                      <td><code>Muggles</code></td>
+                      <td>TAP Payments (Kuwait-based) supports AE, SA, BH, KW, OM, QA, EG — covers Mada, KNET, Fawry; viable backup acquirer for Egypt &amp; Saudi Arabia failover routing in Smart Routing</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/~712020a6cc0c0eb9e5bb8e55bcde7d7d5b0cd5/pages/425985" target="_blank" style="color:var(--yuno-accent)">Checkout.com — Mada (Saudi Arabia)</a></td>
-                      <td>Mada (Saudi national debit network) available via existing Checkout.com MENA integration; lower interchange rate; avoids 3DS friction for Saudi subscribers</td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2424897537/Tamara+-+General" target="_blank" style="color:var(--yuno-accent)">Tamara — General</a></td>
+                      <td><code>Muggles</code></td>
+                      <td>Tamara BNPL integrated in Yuno; supports SA, AE, KW, BH, QA, EG; installment-based billing removes 3DS friction entirely for subscribers who prefer BNPL</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/~712020a6cc0c0eb9e5bb8e55bcde7d7d5b0cd5/pages/458753" target="_blank" style="color:var(--yuno-accent)">dLocal — M-Pesa (Kenya)</a></td>
-                      <td>M-Pesa via dLocal available in Yuno; payment_method_id <code>"MW"</code>; DIRECT flow with mobile_number; supports Kenya (KE/KES) — proactive recommendation for East Africa expansion</td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2373713921/Checkout+-+Mada" target="_blank" style="color:var(--yuno-accent)">Checkout — Mada</a></td>
+                      <td><code>Muggles</code></td>
+                      <td>Mada (Saudi national debit network) available via existing Checkout.com MENA connection; lower interchange; Tabby BNPL also available on same connection (SA, KW, AE, QA, BH)</td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2335899650/dLocal+-+M+Pesa" target="_blank" style="color:var(--yuno-accent)">dLocal — M-Pesa</a></td>
+                      <td><code>Muggles</code></td>
+                      <td>M-Pesa via dLocal available in Yuno; <code>payment_method_id: "MW"</code>; DIRECT flow with <code>mobile_number</code>; supports Kenya (KE/KES) — proactive recommendation for East Africa expansion</td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/7602177/dLocal" target="_blank" style="color:var(--yuno-accent)">dLocal — General</a></td>
+                      <td><code>Muggles</code></td>
+                      <td>dLocal coverage map: 30 countries across Africa, Asia, LATAM, Middle East; confirmed Kenya/M-Pesa, Nigeria, SA; used to validate East Africa expansion recommendations</td>
                     </tr>
                     <tr>
                       <td><a href="https://yunopayments.atlassian.net/wiki/home" target="_blank" style="color:var(--yuno-accent)">Yuno Confluence Home</a></td>
-                      <td>Full navigation of available PSP/acquirer integrations, 3DS compliance docs, and regional payment method coverage to validate all recommendations in Section 04</td>
+                      <td>All spaces</td>
+                      <td>CQL search across all spaces (<code>Muggles</code>, <code>PROD</code>, <code>TAM</code>, <code>TECH</code>) for 3DS, Checkout.com, TAP, Tamara, Mada, dLocal, M-Pesa. Used to validate all proactive recommendations as already-integrated Yuno products.</td>
                     </tr>
                   </tbody>
                 </table>

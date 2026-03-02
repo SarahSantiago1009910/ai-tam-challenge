@@ -30,8 +30,8 @@ open index.html
 Or serve with any static server:
 
 ```bash
-npx serve .
-# → http://localhost:3000
+npx serve . -p 4000
+# → http://localhost:4000
 ```
 
 ## Tech

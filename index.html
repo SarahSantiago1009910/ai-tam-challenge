@@ -239,42 +239,42 @@
                   <thead><tr><th>Page / Document</th><th>Space</th><th>Key Insight Extracted</th></tr></thead>
                   <tbody>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/PROD/pages/779092023/3DS+-+Yuno" target="_blank" style="color:var(--yuno-accent)">3DS — Yuno</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/PROD/pages/779092023" target="_blank" style="color:var(--yuno-accent)">3DS — Yuno</a></td>
                       <td><code>PROD</code></td>
                       <td>Confirmed <code>three_d_secure_exemptions: ["recurring_operation"]</code> as the correct SCA exemption field in Yuno Smart Routing config; ECI values (05=frictionless, 06=challenge); <code>stored_credentials.reason: "SUBSCRIPTION"</code> requirement for MIT</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/TAM/pages/998080517/3DS+flow" target="_blank" style="color:var(--yuno-accent)">3DS flow</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/TAM/pages/998080517" target="_blank" style="color:var(--yuno-accent)">3DS flow</a></td>
                       <td><code>TAM</code></td>
                       <td>TAM-specific 3DS implementation guide; frictionless vs challenge flow decision tree; SCA exemption configuration steps for recurring merchants</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/918716436/CHECKOUT" target="_blank" style="color:var(--yuno-accent)">CHECKOUT ⭐️ (Checkout.com — Main)</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/918716436" target="_blank" style="color:var(--yuno-accent)">CHECKOUT ⭐️ (Checkout.com — Main)</a></td>
                       <td><code>Muggles</code></td>
                       <td>Confirmed Checkout.com MENA acquirer configuration; response code <strong>20154</strong> = "3D-Secure Authentication Required" (equivalent to code 82); countries covered including SA, AE, KW, QA, BH, OM, EG</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2275639298/TAP+-+Cards" target="_blank" style="color:var(--yuno-accent)">TAP — Cards</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2275639298" target="_blank" style="color:var(--yuno-accent)">TAP — Cards</a></td>
                       <td><code>Muggles</code></td>
                       <td>TAP Payments (Kuwait-based) supports AE, SA, BH, KW, OM, QA, EG — covers Mada, KNET, Fawry; viable backup acquirer for Egypt &amp; Saudi Arabia failover routing in Smart Routing</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2424897537/Tamara+-+General" target="_blank" style="color:var(--yuno-accent)">Tamara — General</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2424897537" target="_blank" style="color:var(--yuno-accent)">Tamara — General</a></td>
                       <td><code>Muggles</code></td>
                       <td>Tamara BNPL integrated in Yuno; supports SA, AE, KW, BH, QA, EG; installment-based billing removes 3DS friction entirely for subscribers who prefer BNPL</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2373713921/Checkout+-+Mada" target="_blank" style="color:var(--yuno-accent)">Checkout — Mada</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2373713921" target="_blank" style="color:var(--yuno-accent)">Checkout — Mada</a></td>
                       <td><code>Muggles</code></td>
                       <td>Mada (Saudi national debit network) available via existing Checkout.com MENA connection; lower interchange; Tabby BNPL also available on same connection (SA, KW, AE, QA, BH)</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2335899650/dLocal+-+M+Pesa" target="_blank" style="color:var(--yuno-accent)">dLocal — M-Pesa</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/2335899650" target="_blank" style="color:var(--yuno-accent)">dLocal — M-Pesa</a></td>
                       <td><code>Muggles</code></td>
                       <td>M-Pesa via dLocal available in Yuno; <code>payment_method_id: "MW"</code>; DIRECT flow with <code>mobile_number</code>; supports Kenya (KE/KES) — proactive recommendation for East Africa expansion</td>
                     </tr>
                     <tr>
-                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/7602177/dLocal" target="_blank" style="color:var(--yuno-accent)">dLocal — General</a></td>
+                      <td><a href="https://yunopayments.atlassian.net/wiki/spaces/Muggles/pages/7602177" target="_blank" style="color:var(--yuno-accent)">dLocal — General</a></td>
                       <td><code>Muggles</code></td>
                       <td>dLocal coverage map: 30 countries across Africa, Asia, LATAM, Middle East; confirmed Kenya/M-Pesa, Nigeria, SA; used to validate East Africa expansion recommendations</td>
                     </tr>
@@ -1290,52 +1290,93 @@
         </div>
 
         <div class="callout callout-warning">
-          <strong>Key insight from subscription-ms:</strong> The retry engine respects <code>stopOnHardDecline</code>. Code 82 is a <strong>soft decline</strong> (retryable) — so automatic retries should still be queued. However, those retries are failing for the same root cause. Once the MIT fix is deployed, pending scheduled retries will succeed on next execution. Force-retry via API is recommended to recover immediately without waiting for the next scheduled retry window.
+          <strong>Key insight from subscription-ms:</strong> Code 82 is a <strong>soft decline</strong> (retryable) — the retry engine's <code>stopOnHardDecline</code> flag should not have halted retries. Scheduled retries are still queued but failing for the same root cause. Once the MIT fix is deployed, pending retries will succeed on their next execution window. Force-retry via API skips the wait and recovers revenue immediately.
         </div>
 
+        <!-- STEP 1 + 2: ACTIVE force retry and PAUSED resume -->
         <div class="code-block fixed">
           <div class="code-block-header">
-            <span class="code-block-label">Subscription Recovery — API Calls (Yuno Subscription Engine)</span>
-            <span class="pill pill-green">Post-fix recovery playbook</span>
+            <span class="code-block-label">Step 1 — Force Retry: ACTIVE subscriptions with last payment failed</span>
+            <span class="pill pill-green">Immediate · same billing cycle · cancels pending auto-retries</span>
           </div>
-          <pre><span class="json-comment">// ── STEP 1: Force retry for ACTIVE subscriptions with failed last payment ──</span>
-<span class="json-comment">// Executes immediately, same billing cycle, cancels any pending automatic retries</span>
+          <pre><span class="json-comment">// Apply MIT config fix first, then force retry — executes immediately</span>
 POST /v1/subscriptions/<span class="json-changed">{subscription_id}</span>/payments
 {
   <span class="json-key">"force_retry"</span>: <span class="json-bool">true</span>
 }
+<span class="json-comment">// subscription-ms: forced retry cancels any pending scheduled auto-retries to avoid double-charge</span></pre>
+        </div>
 
-<span class="json-comment">// ── STEP 2: Resume PAUSED subscriptions ──</span>
-<span class="json-comment">// Moves PAUSED → ACTIVE, recalculates next billing date if already passed</span>
+        <div class="code-block fixed" style="margin-top:12px">
+          <div class="code-block-header">
+            <span class="code-block-label">Step 2 — Resume: PAUSED subscriptions back to ACTIVE</span>
+            <span class="pill pill-green">PAUSED → ACTIVE · next billing date auto-recalculated</span>
+          </div>
+          <pre><span class="json-comment">// Moves PAUSED → ACTIVE. If next billing date already passed, engine recalculates it automatically.</span>
 PATCH /v1/subscriptions/<span class="json-changed">{subscription_id}</span>
 {
   <span class="json-key">"status"</span>: <span class="json-str">"ACTIVE"</span>
 }
-<span class="json-comment">// subscription-ms: "Ajusta próxima fecha de cobro si ya pasó" — no missed cycles lost</span>
+<span class="json-comment">// subscription-ms context.md: "Ajusta próxima fecha de cobro si ya pasó" → no missed cycles lost
+// Scheduler job re-queued automatically on resume</span></pre>
+        </div>
 
-<span class="json-comment">// ── STEP 3: Re-create CANCELED subscriptions (after re-enrollment) ──</span>
-<span class="json-comment">// CANCELED is terminal. New subscription requires fresh CIT with new network_transaction_id.</span>
+        <!-- CANCELED: dedicated section -->
+        <h2>Flow 5 — Recovering Canceled Subscriptions (Re-enrollment Campaign)</h2>
+
+        <div class="callout callout-critical">
+          <strong>CANCELED is a terminal state in Yuno's subscription engine.</strong> Per <code>subscription-ms</code> state machine: the only allowed transitions are <code>CREATED/ACTIVE/PAUSED → CANCELED</code>. There is no reverse. Subscriptions canceled due to the April 10 payment failures <strong>cannot be reactivated</strong> — a new subscription object must be created for each affected customer, but only after they re-authenticate via a new CIT (3DS) to generate a fresh <code>vaulted_token</code> and <code>network_transaction_id</code>.
+        </div>
+
+        <div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-content"><strong>Identify:</strong> Query canceled subscriptions in the April 10–14 window (filter by <code>status: CANCELED</code> + <code>canceled_at</code> date range + country EG/SA). Estimated ~620 affected.</div></div>
+        <div class="flow-connector"></div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-content"><strong>Re-engage:</strong> Send targeted win-back email with a secure re-enrollment link. Subject: "Action required — renew your StreamWave subscription." Link routes to a dedicated checkout page with 3DS enabled (no low-value exemption request on this step).</div></div>
+        <div class="flow-connector"></div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-content"><strong>Re-authenticate (CIT):</strong> Customer completes checkout → <code>POST /v1/payments</code> with <code>stored_credentials.usage: "FIRST"</code> + <code>vault.save_card: true</code> → 3DS completes → response contains new <code>vaulted_token</code> + <code>network_transaction_id</code>. Store both.</div></div>
+        <div class="flow-connector"></div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-content"><strong>Re-create subscription:</strong> <code>POST /v1/subscriptions</code> with new credentials, <code>CUSTOM_SCHEDULE</code> retry strategy, and <code>PLAN_CREATION_DATE</code> billing anchor.</div></div>
+
+        <div class="code-block fixed" style="margin-top:20px">
+          <div class="code-block-header">
+            <span class="code-block-label">POST /v1/subscriptions — Re-create for Canceled Subscribers</span>
+            <span class="pill pill-green">After successful re-enrollment CIT · Egypt example</span>
+          </div>
+          <pre><span class="json-comment">// Called after customer completes re-enrollment CIT (Flow 0) and new vaulted_token is obtained
+// Same payload structure for SA — change country:"SA", currency:"SAR", value:26.25</span>
 POST /v1/subscriptions
 {
   <span class="json-key">"account_code"</span>: <span class="json-str">"&lt;YUNO_ACCOUNT_ID&gt;"</span>,
   <span class="json-key">"customer_code"</span>: <span class="json-str">"cust_yuno_uuid"</span>,
+  <span class="json-key">"merchant_reference"</span>: <span class="json-str">"sw_reactivation_sub_12345"</span>,  <span class="json-comment">// link back to original sub ID in your DB</span>
   <span class="json-key">"country"</span>: <span class="json-str">"EG"</span>,
-  <span class="json-key">"amount"</span>: { <span class="json-key">"currency"</span>: <span class="json-str">"EGP"</span>, <span class="json-key">"value"</span>: <span class="json-num">215.00</span> },
-  <span class="json-key">"frequency"</span>: { <span class="json-key">"type"</span>: <span class="json-str">"MONTH"</span>, <span class="json-key">"value"</span>: <span class="json-num">1</span> },
-  <span class="json-key">"billing_date"</span>: { <span class="json-key">"type"</span>: <span class="json-str">"PLAN_CREATION_DATE"</span> },
-  <span class="json-key">"payment_method_code"</span>: <span class="json-str">"&lt;vaulted_token_from_new_CIT&gt;"</span>,
+  <span class="json-key">"amount"</span>: {
+    <span class="json-key">"currency"</span>: <span class="json-str">"EGP"</span>,
+    <span class="json-key">"value"</span>: <span class="json-num">215.00</span>  <span class="json-comment">// $6.99 USD equivalent</span>
+  },
+  <span class="json-key">"frequency"</span>: {
+    <span class="json-key">"type"</span>: <span class="json-str">"MONTH"</span>,
+    <span class="json-key">"value"</span>: <span class="json-num">1</span>
+  },
+  <span class="json-key">"billing_date"</span>: {
+    <span class="json-key">"type"</span>: <span class="json-str">"PLAN_CREATION_DATE"</span>  <span class="json-comment">// bill on same day of month as re-enrollment</span>
+  },
+  <span class="json-key">"payment_method_code"</span>: <span class="json-str">"&lt;vaulted_token_from_re_enrollment_CIT&gt;"</span>,  <span class="json-comment">// ✅ Fresh token with 3DS chain</span>
+  <span class="json-key">"require_successful_initial_payment"</span>: <span class="json-bool">false</span>,  <span class="json-comment">// CIT already charged — don't double-bill</span>
   <span class="json-key">"retry_strategy"</span>: {
     <span class="json-key">"retry_on_decline"</span>: <span class="json-bool">true</span>,
     <span class="json-key">"retry_amount"</span>: <span class="json-num">3</span>,
-    <span class="json-key">"retry_strategy"</span>: <span class="json-str">"CUSTOM_SCHEDULE"</span>,
+    <span class="json-key">"strategy"</span>: <span class="json-str">"CUSTOM_SCHEDULE"</span>,
     <span class="json-key">"stop_on_hard_decline"</span>: <span class="json-bool">true</span>,
     <span class="json-key">"retry_schedule"</span>: [
-      { <span class="json-key">"attempt"</span>: <span class="json-num">1</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">86400</span> },   <span class="json-comment">// 24h after fail</span>
-      { <span class="json-key">"attempt"</span>: <span class="json-num">2</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">259200</span> },  <span class="json-comment">// 3 days after fail</span>
-      { <span class="json-key">"attempt"</span>: <span class="json-num">3</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">604800</span> }   <span class="json-comment">// 7 days after fail</span>
+      { <span class="json-key">"attempt"</span>: <span class="json-num">1</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">86400</span>  },  <span class="json-comment">// +24h</span>
+      { <span class="json-key">"attempt"</span>: <span class="json-num">2</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">259200</span> },  <span class="json-comment">// +3 days</span>
+      { <span class="json-key">"attempt"</span>: <span class="json-num">3</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">604800</span> }   <span class="json-comment">// +7 days</span>
     ]
   }
-}</pre>
+}
+
+<span class="json-comment">// Expected webhook on creation → SUBSCRIPTION.CREATED → SUBSCRIPTION.ACTIVE
+// Monitor: if SUBSCRIPTION.ACTIVE not received within 60s, check payment_method_code validity</span></pre>
         </div>
 
       </div>

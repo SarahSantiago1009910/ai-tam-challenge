@@ -33,7 +33,7 @@
 
       <div class="nav-section" style="margin-top:10px"><span class="nav-section-label">Technical Reference</span></div>
       <a class="nav-item" href="#payloads"><span class="nav-num">05</span> API Flows &amp; Payloads</a>
-      <a class="nav-item" href="#appendix"><span class="nav-num">—</span> Appendix</a>
+      <a class="nav-item" href="#appendix"><span class="nav-num">—</span> Appendix &amp; Glossary</a>
     </nav>
 
     <div class="sidebar-meta">
@@ -101,17 +101,35 @@
       <div class="section" id="exec-summary">
         <div class="section-header">
           <div class="section-number">Executive Summary</div>
-          <div class="section-title">What Happened and Why It Matters</div>
+          <div class="section-title">Abstract — Problem, Analysis &amp; Solution</div>
+        </div>
+
+        <!-- Abstract box -->
+        <div style="background:var(--yuno-navy);border:1px solid var(--yuno-border);border-left:4px solid var(--yuno-accent);border-radius:8px;padding:24px 28px;margin-bottom:28px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-accent);text-transform:uppercase;margin-bottom:8px">Problem</div>
+              <p style="margin:0;font-size:14px;line-height:1.7;color:var(--yuno-text)">Between April 11–14, 2025, StreamWave ($8.2M MRR, 850K subscribers) experienced a <strong>31 percentage point authorization collapse</strong> in Egypt and Saudi Arabia — from 78% to 47% overall. 8,018 transactions declined in 4 days. CS tickets up 340%. ~$1.2M/month in recurring revenue at risk.</p>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-accent);text-transform:uppercase;margin-bottom:8px">Analysis Method</div>
+              <p style="margin:0;font-size:14px;line-height:1.7;color:var(--yuno-text)">Cross-referenced 6 data tables (country, payment type, decline code, BIN, timeline, retry) with acquirer emails, deploy logs, and Yuno analytics. Consulted Confluence (9 pages), Slack <code>#product-tech</code> (known bug), GitHub (4 repos including <code>subscription-ms</code>), and Yuno API docs. Red herring (UI deploy) definitively ruled out via Table 2 BIN uniformity analysis.</p>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-accent);text-transform:uppercase;margin-bottom:8px">Solution</div>
+              <p style="margin:0;font-size:14px;line-height:1.7;color:var(--yuno-text)">Three-layer fix: (1) Add <code>stored_credentials</code> object to MIT API payload + fix Yuno bug on Checkout.com <code>challenge_indicator</code>; (2) Enable <code>recurring_operation</code> SCA exemption in Smart Routing per acquirer node; (3) Recover impacted subscriptions via Yuno's subscription engine — PAUSED→ACTIVE resume + force retry for active failures + re-enrollment campaign for canceled. Full recovery: ~<strong>$630K+/month</strong>.</p>
+            </div>
+          </div>
         </div>
 
         <p>On April 14, 2025, StreamWave's Head of Payments escalated a critical authorization rate collapse in Egypt and Saudi Arabia: the overall approval rate had dropped from <strong>78% to 47%</strong> between Friday, April 11 and Wednesday, April 14. Customer support tickets had spiked 340%. Finance was asking daily for updates.</p>
 
-        <p>After pulling three weeks of transaction data from Yuno's analytics dashboard, the root cause is unambiguous: <strong>Fawry (Egypt) and Checkout.com MENA (Saudi Arabia) began enforcing Strong Customer Authentication (SCA) for all Merchant-Initiated recurring transactions on April 10, 2025</strong>, as communicated in advance via email on March 28–29. StreamWave's Yuno integration was not updated to comply, causing recurring billing charges to be submitted without the required 3DS authentication data or valid SCA exemption flags. Both acquirers began declining these transactions with <strong>decline code 82 — Authentication Required</strong>, which now accounts for the dominant share of all failures.</p>
+        <p>Root cause is unambiguous: <strong>Fawry (Egypt) and Checkout.com MENA (Saudi Arabia) began enforcing Strong Customer Authentication (SCA) for all Merchant-Initiated recurring transactions on April 10, 2025</strong>, as communicated in advance via email on March 28–29. StreamWave's Yuno integration was not updated to comply — recurring billing charges were submitted without the required 3DS authentication data or valid SCA exemption flags. Both acquirers responded with <strong>decline code 82 — Authentication Required</strong>.</p>
 
-        <p>The <strong>checkout UI redesign deployed Thursday April 11</strong> did not cause the issue. Data from Table 2 confirms that first-time payments (which use the checkout UI and 3DS) dropped only 2.7 pp — well within normal variance. The collapse is exclusively in recurring MIT payments, which do not touch the checkout UI at all.</p>
+        <p>The <strong>checkout UI redesign deployed April 11</strong> did not cause the issue. Table 2 confirms first-time payments dropped only 2.7 pp (normal variance). The collapse is exclusively in recurring MIT payments, which do not touch the checkout UI at all. BIN uniformity across all 10 issuers (Table 4) eliminates any issuer-specific explanation.</p>
 
         <div class="callout callout-critical">
-          <strong>Key finding:</strong> 8,018 transactions declined with code 82 over the April 11–14 window are 100% recoverable once the MIT configuration is corrected. At $6.99/transaction, that is approximately $56K in immediately stranded revenue for this period alone, extrapolating to ~$420K/month. Total recoverable revenue including smart retry on soft declines is ~$520K+/month.
+          <strong>Key finding:</strong> 8,018 code 82 declines are 100% recoverable once the MIT configuration is corrected. At $6.99/transaction, ~$56K stranded in 4 days, extrapolating to ~$420K/month. Subscription engine analysis (Yuno <code>subscription-ms</code>) confirms PAUSED subscriptions can be resumed programmatically with automatic next-billing-date recalculation. CANCELED subscriptions require a re-enrollment campaign. Total recoverable: ~$630K+/month.
         </div>
       </div>
 
@@ -1204,6 +1222,122 @@
   <span class="json-comment">// Expected fallback: frictionless 3DS2 auth (ECI 05) — no OTP challenge for subscriber</span>
 }</pre>
         </div>
+
+        <!-- ── Flow 0: CIT First Payment ── -->
+        <h2>Flow 0 — First Payment (CIT) — Correct Enrollment Pattern</h2>
+        <p>Before any recurring MIT can work, the first payment must be a Cardholder-Initiated Transaction (CIT) that completes full 3DS authentication and stores the <code>network_transaction_id</code>. This is the anchor for all subsequent MIT charges. StreamWave uses <code>stored_credentials.usage: "FIRST"</code> on signup. <strong>Note:</strong> do not request low-value SCA exemption on this CIT — the exemption may be granted (no 3DS performed) and no <code>network_transaction_id</code> will exist for future MITs.</p>
+
+        <div class="code-block fixed">
+          <div class="code-block-header">
+            <span class="code-block-label">POST /v1/payments — CIT First Payment (Signup)</span>
+            <span class="pill pill-blue">Cardholder-Initiated · Must complete 3DS · Captures network_transaction_id</span>
+          </div>
+          <pre><span class="json-comment">// First payment: subscriber completes checkout UI → 3DS applied → vault card → store network_transaction_id</span>
+{
+  <span class="json-key">"account_id"</span>: <span class="json-str">"&lt;YUNO_ACCOUNT_ID&gt;"</span>,
+  <span class="json-key">"merchant_order_id"</span>: <span class="json-str">"sw_signup_sub_12345_cycle_1"</span>,
+  <span class="json-key">"workflow"</span>: <span class="json-str">"SDK_CHECKOUT"</span>,  <span class="json-comment">// CIT — customer present, checkout UI</span>
+  <span class="json-key">"country"</span>: <span class="json-str">"EG"</span>,  <span class="json-comment">// or "SA" — same structure both markets</span>
+  <span class="json-key">"amount"</span>: { <span class="json-key">"currency"</span>: <span class="json-str">"EGP"</span>, <span class="json-key">"value"</span>: <span class="json-num">215.00</span> },  <span class="json-comment">// $6.99 EGP equivalent</span>
+  <span class="json-key">"customer_payer"</span>: { <span class="json-key">"id"</span>: <span class="json-str">"cust_yuno_uuid"</span> },
+  <span class="json-key">"payment_method"</span>: {
+    <span class="json-key">"type"</span>: <span class="json-str">"CARD"</span>,
+    <span class="json-key">"detail"</span>: {
+      <span class="json-key">"card"</span>: {
+        <span class="json-key">"capture"</span>: <span class="json-bool">true</span>,
+        <span class="json-key">"vault"</span>: { <span class="json-key">"save_card"</span>: <span class="json-bool">true</span> },  <span class="json-comment">// ✅ Vault the card → generates vaulted_token</span>
+        <span class="json-key">"stored_credentials"</span>: {
+          <span class="json-key">"reason"</span>: <span class="json-changed">"SUBSCRIPTION"</span>,
+          <span class="json-key">"usage"</span>: <span class="json-changed">"FIRST"</span>   <span class="json-comment">// ✅ First use — signals CIT to networks</span>
+        }
+        <span class="json-comment">// ⚠️  Do NOT request low-value exemption here — 3DS must complete to produce network_transaction_id</span>
+      }
+    }
+  }
+}
+<span class="json-comment">// → Response includes: vaulted_token + transactions[0].payment_method.stored_credentials.network_transaction_id
+// → Store BOTH in your subscriber record before creating the Yuno subscription object</span></pre>
+        </div>
+
+        <!-- ── Subscription Recovery ── -->
+        <h2>Flow 4 — Subscription Recovery (Yuno Subscription Engine)</h2>
+        <p>Based on analysis of <a href="https://github.com/yuno-payments/subscription-ms" target="_blank" style="color:var(--yuno-accent)"><code>yuno-payments/subscription-ms</code></a>, StreamWave's impacted subscriptions fall into three states, each requiring a different recovery action. <strong>CANCELED is a terminal state</strong> — there is no reverse transition. PAUSED subscriptions can be resumed programmatically with automatic billing date recalculation.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Subscription State</th><th>Volume (est.)</th><th>Recovery Path</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="bold">ACTIVE — last payment failed (code 82)</td>
+                <td>~5,600 subs</td>
+                <td class="warning">Force retry after config fix</td>
+                <td>Apply MIT fix → call force retry endpoint → immediate execution, same billing cycle</td>
+              </tr>
+              <tr>
+                <td class="bold">PAUSED — suspended due to payment failures</td>
+                <td>~1,800 subs</td>
+                <td class="success">Resume → ACTIVE</td>
+                <td>Call resume endpoint → system recalculates next billing date → scheduler re-queued automatically</td>
+              </tr>
+              <tr>
+                <td class="bold">CANCELED — terminated due to hard decline or manual action</td>
+                <td>~620 subs</td>
+                <td class="danger">Re-enrollment campaign required</td>
+                <td>CANCELED is terminal. Create new subscription after customer re-authenticates via 3DS (CIT) to capture new <code>network_transaction_id</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning">
+          <strong>Key insight from subscription-ms:</strong> The retry engine respects <code>stopOnHardDecline</code>. Code 82 is a <strong>soft decline</strong> (retryable) — so automatic retries should still be queued. However, those retries are failing for the same root cause. Once the MIT fix is deployed, pending scheduled retries will succeed on next execution. Force-retry via API is recommended to recover immediately without waiting for the next scheduled retry window.
+        </div>
+
+        <div class="code-block fixed">
+          <div class="code-block-header">
+            <span class="code-block-label">Subscription Recovery — API Calls (Yuno Subscription Engine)</span>
+            <span class="pill pill-green">Post-fix recovery playbook</span>
+          </div>
+          <pre><span class="json-comment">// ── STEP 1: Force retry for ACTIVE subscriptions with failed last payment ──</span>
+<span class="json-comment">// Executes immediately, same billing cycle, cancels any pending automatic retries</span>
+POST /v1/subscriptions/<span class="json-changed">{subscription_id}</span>/payments
+{
+  <span class="json-key">"force_retry"</span>: <span class="json-bool">true</span>
+}
+
+<span class="json-comment">// ── STEP 2: Resume PAUSED subscriptions ──</span>
+<span class="json-comment">// Moves PAUSED → ACTIVE, recalculates next billing date if already passed</span>
+PATCH /v1/subscriptions/<span class="json-changed">{subscription_id}</span>
+{
+  <span class="json-key">"status"</span>: <span class="json-str">"ACTIVE"</span>
+}
+<span class="json-comment">// subscription-ms: "Ajusta próxima fecha de cobro si ya pasó" — no missed cycles lost</span>
+
+<span class="json-comment">// ── STEP 3: Re-create CANCELED subscriptions (after re-enrollment) ──</span>
+<span class="json-comment">// CANCELED is terminal. New subscription requires fresh CIT with new network_transaction_id.</span>
+POST /v1/subscriptions
+{
+  <span class="json-key">"account_code"</span>: <span class="json-str">"&lt;YUNO_ACCOUNT_ID&gt;"</span>,
+  <span class="json-key">"customer_code"</span>: <span class="json-str">"cust_yuno_uuid"</span>,
+  <span class="json-key">"country"</span>: <span class="json-str">"EG"</span>,
+  <span class="json-key">"amount"</span>: { <span class="json-key">"currency"</span>: <span class="json-str">"EGP"</span>, <span class="json-key">"value"</span>: <span class="json-num">215.00</span> },
+  <span class="json-key">"frequency"</span>: { <span class="json-key">"type"</span>: <span class="json-str">"MONTH"</span>, <span class="json-key">"value"</span>: <span class="json-num">1</span> },
+  <span class="json-key">"billing_date"</span>: { <span class="json-key">"type"</span>: <span class="json-str">"PLAN_CREATION_DATE"</span> },
+  <span class="json-key">"payment_method_code"</span>: <span class="json-str">"&lt;vaulted_token_from_new_CIT&gt;"</span>,
+  <span class="json-key">"retry_strategy"</span>: {
+    <span class="json-key">"retry_on_decline"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"retry_amount"</span>: <span class="json-num">3</span>,
+    <span class="json-key">"retry_strategy"</span>: <span class="json-str">"CUSTOM_SCHEDULE"</span>,
+    <span class="json-key">"stop_on_hard_decline"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"retry_schedule"</span>: [
+      { <span class="json-key">"attempt"</span>: <span class="json-num">1</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">86400</span> },   <span class="json-comment">// 24h after fail</span>
+      { <span class="json-key">"attempt"</span>: <span class="json-num">2</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">259200</span> },  <span class="json-comment">// 3 days after fail</span>
+      { <span class="json-key">"attempt"</span>: <span class="json-num">3</span>, <span class="json-key">"delay_seconds"</span>: <span class="json-num">604800</span> }   <span class="json-comment">// 7 days after fail</span>
+    ]
+  }
+}</pre>
+        </div>
+
       </div>
 
 

@@ -102,93 +102,123 @@
       <div class="section" id="visual-summary">
         <div class="section-header">
           <div class="section-number">At a Glance</div>
-          <div class="section-title">Visual Summary — For the Decision Maker</div>
-          <div class="section-desc">Full picture in one view. Details in the sections below.</div>
+          <div class="section-title">Mind Map — For the Decision Maker</div>
+          <div class="section-desc">Full picture in one view. Click any section below for full details.</div>
         </div>
 
-        <!-- KPI strip -->
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px">
-          <div style="flex:1;min-width:150px;background:#1a0a0a;border:1px solid #4a1515;border-radius:8px;padding:16px;text-align:center">
-            <div style="font-size:28px;font-weight:800;color:var(--yuno-danger)">−31pp</div>
-            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Auth rate collapse<br>78% → 47%</div>
-          </div>
-          <div style="flex:1;min-width:150px;background:#1a0a0a;border:1px solid #4a1515;border-radius:8px;padding:16px;text-align:center">
-            <div style="font-size:28px;font-weight:800;color:var(--yuno-danger)">8,018</div>
-            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Declined transactions<br>in 4 days · code 82</div>
-          </div>
-          <div style="flex:1;min-width:150px;background:#1a0a0a;border:1px solid #4a1515;border-radius:8px;padding:16px;text-align:center">
-            <div style="font-size:28px;font-weight:800;color:var(--yuno-danger)">$1.2M</div>
-            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Monthly revenue<br>at risk · EG + SA</div>
-          </div>
-          <div style="flex:1;min-width:150px;background:#0a1a0a;border:1px solid #1e4d1e;border-radius:8px;padding:16px;text-align:center">
-            <div style="font-size:28px;font-weight:800;color:#4ade80">$630K+</div>
-            <div style="font-size:12px;color:var(--yuno-muted);margin-top:4px">Recoverable/month<br>after fix</div>
-          </div>
-        </div>
+        <svg viewBox="0 0 1060 545" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;background:#0d1117;border-radius:12px;border:1px solid #30363d">
+          <defs>
+            <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ef4444"/></marker>
+            <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker>
+            <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4ade80"/></marker>
+            <marker id="arr-yellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker>
+            <marker id="arr-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#444"/></marker>
+          </defs>
 
-        <!-- 3-column mind map -->
-        <div style="background:var(--yuno-navy);border:1px solid var(--yuno-border);border-radius:12px;padding:24px;margin-bottom:20px">
-          <div style="text-align:center;margin-bottom:20px">
-            <div style="display:inline-block;background:#1f1135;border:2px solid var(--yuno-accent);border-radius:10px;padding:12px 24px">
-              <div style="font-size:13px;font-weight:700;color:var(--yuno-accent)">STREAMWAVE MENA CRISIS</div>
-              <div style="font-size:11px;color:var(--yuno-muted);margin-top:2px">Egypt &amp; Saudi Arabia · April 10–14, 2025</div>
-            </div>
-          </div>
+          <!-- ── CONNECTING LINES ── -->
+          <!-- Center → Root Cause (left) -->
+          <path d="M 400,268 Q 310,225 228,195" stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#arr-red)"/>
+          <!-- Center → Diagnosis (top-right) -->
+          <path d="M 608,245 Q 700,160 798,115" stroke="#58a6ff" stroke-width="2" fill="none" marker-end="url(#arr-blue)"/>
+          <!-- Center → Solution (right) -->
+          <path d="M 650,278 Q 728,315 800,350" stroke="#4ade80" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+          <!-- Center → Recovery (bottom) -->
+          <line x1="524" y1="315" x2="524" y2="385" stroke="#fbbf24" stroke-width="2" marker-end="url(#arr-yellow)"/>
+          <!-- Root Cause → sub nodes -->
+          <line x1="127" y1="248" x2="127" y2="262" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <line x1="127" y1="302" x2="127" y2="315" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <!-- Root Cause → Debunked (dashed gray) -->
+          <path d="M 75,248 Q 75,310 75,360" stroke="#444" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#arr-gray)"/>
+          <!-- Diagnosis → sub nodes -->
+          <line x1="910" y1="175" x2="910" y2="188" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <line x1="910" y1="228" x2="910" y2="240" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <!-- Solution → sub nodes -->
+          <line x1="910" y1="425" x2="910" y2="438" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <!-- Recovery internal dividers -->
+          <line x1="450" y1="403" x2="450" y2="458" stroke="#4d3a00" stroke-width="1"/>
+          <line x1="598" y1="403" x2="598" y2="458" stroke="#4d3a00" stroke-width="1"/>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <!-- ── CENTER NODE ── -->
+          <rect x="398" y="223" width="252" height="92" rx="12" fill="#1f1135" stroke="#58a6ff" stroke-width="2.5"/>
+          <text x="524" y="247" text-anchor="middle" fill="#58a6ff" font-family="monospace" font-size="11.5" font-weight="bold">STREAMWAVE MENA CRISIS</text>
+          <text x="524" y="264" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9.5">Egypt + Saudi Arabia · April 10–14, 2025</text>
+          <text x="524" y="286" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="20" font-weight="800">−31pp</text>
+          <text x="524" y="305" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9">$1.2M/month at risk · 8,018 code 82 declines</text>
 
-            <div style="background:#0f1a0f;border:1px solid #1e4d1e;border-radius:10px;padding:16px">
-              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4ade80;margin-bottom:10px">ROOT CAUSE</div>
-              <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.5">
-                <div style="background:rgba(74,222,128,0.07);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px">CBE + SAMA mandated <strong>SCA/3DS</strong> for all recurring card payments from April 10</div>
-                <div style="background:rgba(74,222,128,0.07);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px">Fawry + Checkout.com MENA warned on <strong>March 28–29</strong>. TAM acknowledged, did not act.</div>
-                <div style="background:rgba(74,222,128,0.07);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px">MIT billing payload missing <code style="background:#0a2a0a;padding:1px 4px;border-radius:3px">stored_credentials</code> + 3DS exemption flag</div>
-                <div style="background:rgba(239,68,68,0.1);border-left:3px solid var(--yuno-danger);border-radius:4px;padding:7px 9px"><strong>NOT the UI deploy.</strong> First payments −2.7pp only. Collapse is 100% MIT recurring.</div>
-              </div>
-            </div>
+          <!-- ── ROOT CAUSE (LEFT) ── -->
+          <rect x="28" y="130" width="198" height="118" rx="8" fill="#140808" stroke="#ef4444" stroke-width="1.8"/>
+          <text x="127" y="152" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="10" font-weight="bold" letter-spacing="1">ROOT CAUSE</text>
+          <line x1="43" y1="160" x2="211" y2="160" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+          <text x="127" y="177" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9.5">CBE + SAMA SCA mandate</text>
+          <text x="127" y="193" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9.5">effective April 10</text>
+          <text x="127" y="212" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9.5">MIT payload missing</text>
+          <text x="127" y="228" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9.5">stored_credentials + 3DS flag</text>
 
-            <div style="background:#0f1520;border:1px solid #1e3a5f;border-radius:10px;padding:16px">
-              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--yuno-accent);margin-bottom:10px">HOW WE DIAGNOSED</div>
-              <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.5">
-                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>6 data tables:</strong> auth by country, payment type, decline code, BIN, timeline, retry</div>
-                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>BIN uniformity:</strong> all 10 issuers (5 EG, 5 SA) identical drop → merchant-side failure, not issuer policy</div>
-                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>Slack #product-tech:</strong> confirmed Yuno bug on <code style="background:#0a1a2a;padding:1px 4px;border-radius:3px">challenge_indicator</code> mapping</div>
-                <div style="background:rgba(88,166,255,0.07);border-left:3px solid var(--yuno-accent);border-radius:4px;padding:7px 9px"><strong>UAE/Kuwait unaffected</strong> on same acquirer → SAMA mandate, not platform failure</div>
-              </div>
-            </div>
+          <!-- RC sub: acquirers -->
+          <rect x="28" y="262" width="198" height="42" rx="6" fill="#0f0505" stroke="#7f1d1d" stroke-width="1"/>
+          <text x="127" y="279" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="9" font-weight="bold">Fawry (EG) · Checkout.com MENA (SA)</text>
+          <text x="127" y="295" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9">100% routing · zero failover</text>
 
-            <div style="background:#1a1500;border:1px solid #4d3d00;border-radius:10px;padding:16px">
-              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fbbf24;margin-bottom:10px">SOLUTION &amp; RECOVERY</div>
-              <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.5">
-                <div style="background:rgba(251,191,36,0.07);border-left:3px solid #fbbf24;border-radius:4px;padding:7px 9px"><strong>P0 — today:</strong> Add <code style="background:#1a1200;padding:1px 4px;border-radius:3px">stored_credentials</code> to MIT payload + fix Checkout.com <code style="background:#1a1200;padding:1px 4px;border-radius:3px">challenge_indicator</code> bug</div>
-                <div style="background:rgba(251,191,36,0.07);border-left:3px solid #fbbf24;border-radius:4px;padding:7px 9px"><strong>P1 — 48h:</strong> Enable <code style="background:#1a1200;padding:1px 4px;border-radius:3px">recurring_operation</code> exemption in Smart Routing + TAP failover</div>
-                <div style="background:rgba(251,191,36,0.07);border-left:3px solid #fbbf24;border-radius:4px;padding:7px 9px"><strong>Recovery:</strong> Force-retry ACTIVE subs · Resume PAUSED → ACTIVE · Re-enroll CANCELED (~620)</div>
-                <div style="background:rgba(74,222,128,0.12);border-left:3px solid #4ade80;border-radius:4px;padding:7px 9px"><strong>Expected: ~$630K+/month recovered</strong> once fix deployed</div>
-              </div>
-            </div>
+          <!-- RC sub: warning missed -->
+          <rect x="28" y="315" width="198" height="42" rx="6" fill="#0f0505" stroke="#7f1d1d" stroke-width="1"/>
+          <text x="127" y="332" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="9" font-weight="bold">Warning sent March 28–29</text>
+          <text x="127" y="348" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9">TAM ack'd · no action taken</text>
 
-          </div>
-        </div>
+          <!-- DEBUNKED (gray dashed) -->
+          <rect x="28" y="360" width="198" height="50" rx="6" fill="#0d1117" stroke="#333" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="127" y="379" text-anchor="middle" fill="#6e7681" font-family="monospace" font-size="9.5">❌  UI Deploy April 11</text>
+          <text x="127" y="395" text-anchor="middle" fill="#6e7681" font-family="monospace" font-size="9">First payments −2.7pp only</text>
+          <text x="127" y="406" text-anchor="middle" fill="#6e7681" font-family="monospace" font-size="8.5">→ ruled out by Table 2 data</text>
+          <line x1="38" y1="387" x2="216" y2="387" stroke="#555" stroke-width="1" opacity="0.6"/>
 
-        <!-- Action timeline strip -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-          <div style="background:var(--yuno-navy);border:1px solid var(--yuno-danger);border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-danger);text-transform:uppercase">Now — P0</div>
-            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">Fix MIT payload<br>+ routing bug</div>
-          </div>
-          <div style="background:var(--yuno-navy);border:1px solid var(--yuno-warning);border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-warning);text-transform:uppercase">Within 48h — P1</div>
-            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">SCA exemption<br>+ TAP failover</div>
-          </div>
-          <div style="background:var(--yuno-navy);border:1px solid var(--yuno-accent);border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yuno-accent);text-transform:uppercase">Week 1 — P1</div>
-            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">Force retry<br>+ resume PAUSED</div>
-          </div>
-          <div style="background:var(--yuno-navy);border:1px solid #4ade80;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#4ade80;text-transform:uppercase">Week 2 — P2</div>
-            <div style="font-size:12px;margin-top:5px;line-height:1.6;color:var(--yuno-text)">Re-enrollment<br>campaign · CANCELED</div>
-          </div>
-        </div>
+          <!-- ── DIAGNOSIS (TOP-RIGHT) ── -->
+          <rect x="798" y="52" width="228" height="123" rx="8" fill="#0b1525" stroke="#58a6ff" stroke-width="1.8"/>
+          <text x="912" y="74" text-anchor="middle" fill="#58a6ff" font-family="monospace" font-size="10" font-weight="bold" letter-spacing="1">HOW WE DIAGNOSED</text>
+          <line x1="813" y1="82" x2="1011" y2="82" stroke="#58a6ff" stroke-width="0.5" opacity="0.5"/>
+          <text x="912" y="98" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="9.5">6 data tables cross-referenced</text>
+          <text x="912" y="114" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="9.5">BIN uniformity → merchant fault</text>
+          <text x="912" y="130" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="9.5">UAE/KW unaffected → SAMA only</text>
+          <text x="912" y="146" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="9.5">Slack: challenge_indicator bug</text>
+          <text x="912" y="162" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="9.5">Confluence + GitHub + API docs</text>
+
+          <!-- Diag sub1 -->
+          <rect x="798" y="188" width="228" height="40" rx="6" fill="#080f1c" stroke="#1e3a6e" stroke-width="1"/>
+          <text x="912" y="205" text-anchor="middle" fill="#58a6ff" font-family="monospace" font-size="9.5" font-weight="bold">Table 2: first payments −2.7pp</text>
+          <text x="912" y="220" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="9">Red herring definitively ruled out</text>
+
+          <!-- Diag sub2 -->
+          <rect x="798" y="240" width="228" height="40" rx="6" fill="#080f1c" stroke="#1e3a6e" stroke-width="1"/>
+          <text x="912" y="257" text-anchor="middle" fill="#58a6ff" font-family="monospace" font-size="9.5" font-weight="bold">Table 4: BIN uniformity</text>
+          <text x="912" y="272" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="9">10 issuers · same drop · not issuer policy</text>
+
+          <!-- ── SOLUTION (RIGHT) ── -->
+          <rect x="798" y="315" width="228" height="110" rx="8" fill="#07140a" stroke="#4ade80" stroke-width="1.8"/>
+          <text x="912" y="337" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="10" font-weight="bold" letter-spacing="1">SOLUTION</text>
+          <line x1="813" y1="345" x2="1011" y2="345" stroke="#4ade80" stroke-width="0.5" opacity="0.5"/>
+          <text x="912" y="362" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="9.5">P0: Add stored_credentials to MIT</text>
+          <text x="912" y="378" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="9.5">P0: Fix challenge_indicator bug</text>
+          <text x="912" y="394" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="9.5">P1: recurring_operation exemption</text>
+          <text x="912" y="410" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="9.5">P1: TAP Payments failover routing</text>
+
+          <!-- Solution sub: recovery value -->
+          <rect x="798" y="438" width="228" height="42" rx="6" fill="#040d06" stroke="#14532d" stroke-width="1"/>
+          <text x="912" y="456" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="10" font-weight="bold">~$630K+/month recovered</text>
+          <text x="912" y="472" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="9">P0 today · P1 48h · P2 week 2</text>
+
+          <!-- ── SUBSCRIPTION RECOVERY (BOTTOM) ── -->
+          <rect x="298" y="385" width="452" height="73" rx="8" fill="#181200" stroke="#fbbf24" stroke-width="1.8"/>
+          <text x="524" y="406" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="10" font-weight="bold" letter-spacing="1">SUBSCRIPTION RECOVERY</text>
+          <line x1="313" y1="414" x2="735" y2="414" stroke="#fbbf24" stroke-width="0.5" opacity="0.5"/>
+          <text x="374" y="432" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="9.5" font-weight="bold">ACTIVE (~5.6K)</text>
+          <text x="374" y="447" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="9">Force retry · immediate</text>
+          <text x="524" y="432" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="9.5" font-weight="bold">PAUSED (~1.8K)</text>
+          <text x="524" y="447" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="9">Resume → ACTIVE auto</text>
+          <text x="674" y="432" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9.5" font-weight="bold">CANCELED (~620)</text>
+          <text x="674" y="447" text-anchor="middle" fill="#fca5a5" font-family="monospace" font-size="9">Re-enrollment campaign</text>
+
+          <!-- Legend -->
+          <text x="524" y="530" text-anchor="middle" fill="#484f58" font-family="monospace" font-size="9">Details in sections below · Section 01 RCA · Section 02 Action Plan · Section 05 API Flows</text>
+        </svg>
 
       </div>
 
